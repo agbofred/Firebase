@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="container">
+        <h2>Form Validation</h2>
+        <form id="myForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+            <div class="error" id="nameError"></div>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+            <div class="error" id="emailError"></div>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age">
+            <div class="error" id="ageError"></div>
+
+            <button type="submit" id="submit">Submit</button>
+        </form>
+
+        <div class="result" id="resultContainer" style="display:none;">
+            <h3>Submitted Data:</h3>
+            <p><strong>Name:</strong> <span id="resultName"></span></p>
+            <p><strong>Email:</strong> <span id="resultEmail"></span></p>
+            <p><strong>Age:</strong> <span id="resultAge"></span></p>
+        </div>
+    </div>
+   
+</body>
+</html>
+<script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+    apiKey: "AIzaSyDC1npZdozz3BUmFVLeTWok3fmaznym1Qg",
+    authDomain: "formdemo-32b2d.firebaseapp.com",
+    databaseURL: "https://formdemo-32b2d-default-rtdb.firebaseio.com",
+    projectId: "formdemo-32b2d",
+    storageBucket: "formdemo-32b2d.firebasestorage.app",
+    messagingSenderId: "13966725540",
+    appId: "1:13966725540:web:e1ad389aeeff16fbd6f131"
+    };
+
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // get ref to database
+    const db = getDatabase(app);
+
+    document.getElementById("submit").addEventListener("click", function(e){
+        e.preventDefault();
+        set(ref(db,'user/' + document.getElementById("name").value),{
+            dname: document.getElementById("name").value,
+            demail: document.getElementById("email").value,
+            dage: document.getElementById("age").value
+        });
+        alert("Inserted well!");
+    })
+
+
+</script>
+
